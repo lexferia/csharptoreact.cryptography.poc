@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet --version)",
+      "Bash(npm --version)",
+      "PowerShell(dotnet new sln *)",
+      "PowerShell(dotnet build *)",
+      "Bash(dotnet sln *)",
+      "Bash(dotnet add *)",
+      "Bash(dotnet --list-sdks)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(dotnet script *)",
+      "Bash(dotnet-script -e \"using System.Security.Cryptography; Console.WriteLine\\(typeof\\(AuthenticationTagMismatchException\\).FullName\\);\")",
+      "Bash(powershell *)",
+      "Bash(dotnet sdk *)",
+      "Bash(git init *)",
+      "Bash(git commit *)",
+      "Bash(Test-Path C:\\\\MIMS\\\\csharptoreact.cryptography.poc\\\\web\\\\package.json)",
+      "Bash(Test-Path C:\\\\MIMS\\\\csharptoreact.cryptography.poc\\\\web\\\\src\\\\main.tsx)",
+      "Bash(Test-Path C:\\\\MIMS\\\\csharptoreact.cryptography.poc\\\\web\\\\src\\\\App.tsx)",
+      "Bash(Test-Path C:\\\\MIMS\\\\csharptoreact.cryptography.poc\\\\web\\\\index.html)",
+      "Bash(Test-Path C:\\\\MIMS\\\\csharptoreact.cryptography.poc\\\\web\\\\tsconfig.json)",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(git -C \"C:\\\\MIMS\\\\csharptoreact.cryptography.poc\" add web)",
+      "Bash(git -C \"C:\\\\MIMS\\\\csharptoreact.cryptography.poc\" commit -m \"feat: render decrypted image grid in App\")",
+      "Bash(git *)",
+      "PowerShell(npm *)",
+      "Bash(dotnet run *)",
+      "Bash(echo \"API started in background with PID $!\")",
+      "Bash(curl -s http://localhost:5050/api/images)",
+      "Bash(pkill -f \"dotnet run\")",
+      "Bash(pkill -f \"Api.dll\")"
+    ]
+  }
+}
