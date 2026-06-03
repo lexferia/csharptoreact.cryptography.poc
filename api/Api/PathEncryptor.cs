@@ -18,7 +18,7 @@ public sealed class PathEncryptor
     {
         if (key.Length != 32)
             throw new ArgumentException("Key must be 32 bytes (256-bit).", nameof(key));
-        _key = key;
+        _key = (byte[])key.Clone();
     }
 
     public static PathEncryptor FromBase64(string base64Key)
@@ -47,6 +47,9 @@ public sealed class PathEncryptor
     public string Decrypt(string base64)
     {
         var data = Convert.FromBase64String(base64);
+        if (data.Length < NonceSize + TagSize)
+            throw new ArgumentException(
+                $"Ciphertext too short: expected at least {NonceSize + TagSize} bytes.", nameof(base64));
         var nonce = data[..NonceSize];
         var tag = data[^TagSize..];
         var cipher = data[NonceSize..^TagSize];

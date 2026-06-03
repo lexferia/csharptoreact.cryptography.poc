@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using Api;
 using Xunit;
 
@@ -50,5 +51,26 @@ public class PathEncryptorTests
         // 16 bytes, not 32.
         var shortKey = Convert.ToBase64String(new byte[16]);
         Assert.Throws<ArgumentException>(() => PathEncryptor.FromBase64(shortKey));
+    }
+
+    [Fact]
+    public void FromBase64_ThrowsOnLongKeyLength()
+    {
+        // 64 bytes, not 32.
+        var longKey = Convert.ToBase64String(new byte[64]);
+        Assert.Throws<ArgumentException>(() => PathEncryptor.FromBase64(longKey));
+    }
+
+    [Fact]
+    public void Decrypt_ThrowsOnTamperedCiphertext()
+    {
+        var enc = PathEncryptor.FromBase64(TestKeyB64);
+        var cipher = enc.Encrypt("hello");
+        var bytes = Convert.FromBase64String(cipher);
+        bytes[bytes.Length - 1] ^= 0xFF; // flip a tag byte
+        // On .NET 6 AesGcm throws CryptographicException (AuthenticationTagMismatchException
+        // is a net7+ subclass); catch the common base so the test is correct on net6.0.
+        Assert.Throws<CryptographicException>(
+            () => enc.Decrypt(Convert.ToBase64String(bytes)));
     }
 }
