@@ -58,7 +58,10 @@ function configuredKey(): Promise<CryptoKey> {
   if (!cachedKey) {
     const b64 = import.meta.env.VITE_ENC_KEY as string | undefined;
     if (!b64) throw new Error("Missing VITE_ENC_KEY environment variable.");
-    cachedKey = importKey(b64);
+    cachedKey = importKey(b64).catch((err) => {
+      cachedKey = null; // allow retry on next call instead of caching a rejection
+      return Promise.reject(err);
+    });
   }
   return cachedKey;
 }
